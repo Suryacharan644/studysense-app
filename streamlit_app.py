@@ -3,18 +3,30 @@ import pandas as pd
 import numpy as np
 
 # App title
-st.title("StudySense - Student Productivity Predictor")
+st.title("StudySense - AI Behavioral Analysis and Productivity Predictor")
 
-st.write("Enter student behavioral details to predict productivity score.")
+# Load dataset from GitHub repository
+df = pd.read_excel("studysense_behavioral_dataset_1.xlsx")
 
-# Inputs
+# Show dataset preview
+st.subheader("Dataset Preview")
+st.dataframe(df.head())
+
+# Show basic dataset info
+st.subheader("Dataset Information")
+st.write("Total Students:", df.shape[0])
+st.write("Total Features:", df.shape[1])
+
+# User inputs
+st.subheader("Enter Student Behavioral Details")
+
 study_hours = st.slider("Daily Study Hours", 0, 12, 4)
 phone_usage = st.slider("Daily Phone Usage (hours)", 0, 15, 5)
 sleep_duration = st.slider("Sleep Duration (hours)", 0, 12, 7)
 motivation = st.slider("Motivation Score", 1, 5, 3)
 focus = st.slider("Focus Score", 1, 5, 3)
 
-# Prediction logic (temporary simple logic)
+# Temporary prediction logic (until ML model integrated)
 if st.button("Predict Productivity"):
 
     productivity = (
@@ -27,8 +39,7 @@ if st.button("Predict Productivity"):
 
     productivity = round(productivity, 2)
 
-    st.subheader("Predicted Productivity Score:")
-    st.success(productivity)
+    st.success(f"Predicted Productivity Score: {productivity}")
 
     if productivity >= 20:
         st.write("High Productivity Student")
@@ -37,5 +48,6 @@ if st.button("Predict Productivity"):
     else:
         st.write("Low Productivity Student")
 
-# Footer
-st.write("StudySense AI App")
+# Show dataset statistics
+st.subheader("Dataset Statistics")
+st.write(df.describe())
